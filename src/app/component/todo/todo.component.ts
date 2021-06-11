@@ -60,14 +60,19 @@ export class TodoComponent implements OnInit {
       return;
     }
 
-    this.todos.push({
-      id: this.idForTodo,
-      title: this.todoTitle,
-      completed: false,
-    })
-    this.toastr.success('Added successfully')
-    this.todoTitle = '';
-    this.idForTodo++;
+    let data = this.todos.find(e=>e.title == this.todoTitle);
+    if(data){
+      this.toastr.error('Already Present');
+    }else{
+      this.todos.push({
+        id: this.idForTodo,
+        title: this.todoTitle,
+        completed: false,
+      })
+      this.toastr.success('Added successfully')
+      this.todoTitle = '';
+      this.idForTodo++;
+    }
   }
 
   edit(id,modal){
