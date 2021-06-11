@@ -1,0 +1,38 @@
+<h2>To Do Module</h2>
+<label class="mb-2">Add List</label>
+<input type="text" class="todo-input" placeholder="Enter Todo work" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
+
+<label class="mb-2">Search List</label>
+<input type="text" class="todo-input" placeholder="Search" [(ngModel)]="searchTitle">
+
+<div class="todo-item" *ngFor="let todo of todos | filter:searchTitle">
+    <div class="todo-item-left">
+      <div class="todo-item-label">{{ todo.title }}</div>
+    </div>
+    <div class="remove-item" (click)="deleteTodo(todo.id)">
+      &times;
+    </div>
+    <div class="remove-item">
+        <button class="btn btn-info" (click)="edit(todo.id,mymodal)">Edit</button>
+      </div>
+      <div class="remove-item">
+        <button class="btn btn-info" [disabled]="todo.completed" (click)="complete(todo.id)">{{todo.completed ? "Completed" : "Complete"}}</button>
+      </div>
+  </div>
+  
+  
+  <ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="todo-item-edit" [(ngModel)]="editTitle" (keyup.enter)="doneEdit()" (keyup.esc)="cancelEdit()"autofocus>
+    </div>
+  </ng-template>
+
+  <!-- <ng-template #editingTodo>
+    <input type="text" class="todo-item-edit" [(ngModel)]="todo.title" (blur)="doneEdit(todo)" (keyup.enter)="doneEdit(todo)" (keyup.esc)="cancelEdit(todo)"autofocus>
+  </ng-template> -->
